@@ -4,13 +4,20 @@
 
 $(document).ready(function() {
   if(window.izzmo == undefined) window.izzmo = { };
+
+
   
   window.izzmo = $.extend(window.izzmo, {
+    egg : {
+      init: function() {
+        alert('loading');
+        $('ul#settings-dropdown').append($("<li class='option' id='eggtt'>EggTT</li>"));
+
+      }
+    },
     ttObj: null,
     awesomer: null,
-    // showArc: true,
     lamed: false,
-    // arcInt: 0,
     deg: 0.0,
     vote: function(c) {
       var f = $.sha1(window.izzmo.ttObj.roomId + c + window.izzmo.ttObj.currentSong._id);
@@ -70,29 +77,11 @@ $(document).ready(function() {
         window.izzmo.awesomer = setTimeout(function() {
           window.izzmo.vote('up');
         }, timeAmt);
-        
-        // if(!window.izzmo.showArc) return;
-
-        // window.izzmo.deg = 0.0;
-        // window.izzmo.degAmt = 180 / timeAmt * 55;
-        // if(window.izzmo.arcInt != 0) {
-        //   clearInterval(window.izzmo.arcInt);
-        //   window.izzmo.arcInt = 0;
-        // }
-        // window.izzmo.arcInt = setInterval(function() {
-        //   if(window.izzmo.deg >= 180) {
-        //     clearInterval(window.izzmo.arcInt);
-        //     window.izzmo.arcInt = 0;
-        //   }
-        //   window.izzmo.setArc(window.izzmo.deg, false);
-        //   window.izzmo.deg += window.izzmo.degAmt;
-        // }, 50);
       }
       else if(d.command == 'update_votes') {
         $.each(d.room.metadata.votelog, function() {
           if(this[0] == window.turntable.user.id) {
             window.izzmo.stop();
-            // window.izzmo.setArc(180, 'down' === this[1]);
             return false;
           }
         });     
@@ -121,6 +110,7 @@ $(document).ready(function() {
       setTimeout(function() {window.izzmo.vote('down');}, 250);
     },
     init: function() {
+      window.izzmo.eggtt.init();
       console.log('Initializing AutoAwesomer.');
       $('.roomView').ready(function() {
         window.izzmo.ttObj = window.turntable.buddyList.room;
@@ -129,16 +119,6 @@ $(document).ready(function() {
           return;
         }
         window.izzmo.room = window.location.pathname;
-        // console.log('Setting up AwesomeArc...');
-        // var meterObj = $('#awesome-meter');
-        // if(meterObj.length > 0 && meterObj.css('display') != 'none') {
-          // var meter = meterObj.position();
-          // window.izzmo.arc = $('<canvas id="izzmo-arc" width="' + meterObj.width() + '" height="' + parseInt(meterObj.height()*0.39) + '" style="overflow: hidden; position: absolute; z-index: 20000; top: ' + meter.top + 'px; left: ' + meter.left + 'px;">Izzmo\'s AutoAwesome</canvas>');
-          // window.izzmo.arc.prependTo(meterObj.parent());
-          // window.izzmo.showArc = true;
-        // }
-        // else
-          // window.izzmo.showArc = false;
         
         console.log('Configuring AutoAwesomer message bar...');
         window.izzmo.botMessage = $('<div id="bot-message">Izzmo\'s AutoAwesome. <span style="font-style: italic;"></span> <a href="#" style="text-decoration: none; color: red; font-weight: bold;">Turn off</a></div>');
@@ -186,16 +166,6 @@ $(document).ready(function() {
           if(window.location.pathname != window.izzmo.room) {
             console.log('New Room found, reinitializing...');
             window.izzmo.destruct();
-            // if(window.izzmo.showArc) {
-            //   var meterObj = $('#awesome-meter');
-            //   var check = setInterval(function() {
-            //     if(meterObj.length > 0 && meterObj.css('display') != 'none') {
-            //       window.izzmo.init();
-            //       clearInterval(check);
-            //     }
-            //   }, 1000);
-            //   setTimeout(function() {clearInterval(check);}, 10000);
-            // }
           }
         }, 3000);
         console.log('AutoAwesomer setup complete.');
