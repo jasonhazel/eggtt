@@ -1,11 +1,5 @@
 /**
- * Turntable.fm Auto Awesome Script
- * Created by Izzmo, http://github.com/izzmo/AutoAwesomer
- * Last Updated: December 4th, 2012
- * 
- * If you have any questions or concerns,
- * please email me: me@izzmo.com, or find
- * me in http://tt.fm/dubstep
+ * Based on Izzmo's AA, https://github.com/Izzmo/AutoAwesomer
  */
 
 $(document).ready(function() {
@@ -14,9 +8,9 @@ $(document).ready(function() {
   window.izzmo = $.extend(window.izzmo, {
     ttObj: null,
     awesomer: null,
-    showArc: true,
+    // showArc: true,
     lamed: false,
-    arcInt: 0,
+    // arcInt: 0,
     deg: 0.0,
     vote: function(c) {
       var f = $.sha1(window.izzmo.ttObj.roomId + c + window.izzmo.ttObj.currentSong._id);
@@ -77,64 +71,44 @@ $(document).ready(function() {
           window.izzmo.vote('up');
         }, timeAmt);
         
-        if(!window.izzmo.showArc) return;
+        // if(!window.izzmo.showArc) return;
 
-        window.izzmo.deg = 0.0;
-        window.izzmo.degAmt = 180 / timeAmt * 55;
-        if(window.izzmo.arcInt != 0) {
-          clearInterval(window.izzmo.arcInt);
-          window.izzmo.arcInt = 0;
-        }
-        window.izzmo.arcInt = setInterval(function() {
-          if(window.izzmo.deg >= 180) {
-            clearInterval(window.izzmo.arcInt);
-            window.izzmo.arcInt = 0;
-          }
-          window.izzmo.setArc(window.izzmo.deg, false);
-          window.izzmo.deg += window.izzmo.degAmt;
-        }, 50);
+        // window.izzmo.deg = 0.0;
+        // window.izzmo.degAmt = 180 / timeAmt * 55;
+        // if(window.izzmo.arcInt != 0) {
+        //   clearInterval(window.izzmo.arcInt);
+        //   window.izzmo.arcInt = 0;
+        // }
+        // window.izzmo.arcInt = setInterval(function() {
+        //   if(window.izzmo.deg >= 180) {
+        //     clearInterval(window.izzmo.arcInt);
+        //     window.izzmo.arcInt = 0;
+        //   }
+        //   window.izzmo.setArc(window.izzmo.deg, false);
+        //   window.izzmo.deg += window.izzmo.degAmt;
+        // }, 50);
       }
       else if(d.command == 'update_votes') {
         $.each(d.room.metadata.votelog, function() {
           if(this[0] == window.turntable.user.id) {
             window.izzmo.stop();
-            window.izzmo.setArc(180, 'down' === this[1]);
+            // window.izzmo.setArc(180, 'down' === this[1]);
             return false;
           }
         });     
       }
     },
-    setArc: function(degree, red) {
-      if(!window.izzmo.showArc) return;
-      var context = window.izzmo.arc[0].getContext('2d'), $arc = $(window.izzmo.arc);
-      context.clearRect(0, 0, 100, 100);
-      context.beginPath();
-      context.arc($arc.width()/2, $arc.height()+5, $arc.height()+2, -Math.PI, degree*Math.PI/180 - Math.PI, false);
-      context.lineWidth = 2;
-      if(red)
-        context.strokeStyle = 'rgb(255, 0, 0)';
-      else
-        context.strokeStyle = 'rgb(0, 200, 0)';
-      context.shadowOffsetX = 0;
-      context.shadowOffsetY = 0;
-      context.shadowBlur = 10;
-      if(red)
-        context.shadowColor = 'rgba(255, 0, 0, 1)';
-      else
-        context.shadowColor = 'rgba(0, 255, 0, 1)';
-      context.stroke();
-    },
     room: '',
     watcher: null,
     stop: function() {
       clearTimeout(window.izzmo.awesomer);
-      clearInterval(window.izzmo.arcInt);
-      window.izzmo.arcInt = 0;
+      // clearInterval(window.izzmo.arcInt);
+      // window.izzmo.arcInt = 0;
     },
     awesome: function() {
       window.izzmo.vote('up');
       window.izzmo.stop();
-      window.izzmo.setArc(180, false);
+      // window.izzmo.setArc(180, false);
     },
     lame: function() {
       if(!window.izzmo.lamed) {
@@ -143,7 +117,7 @@ $(document).ready(function() {
         window.izzmo.botMessage.find('span').html("Song lamed! Awesomering will resume next song.");
         window.izzmo.lamed = true;
       }
-      window.izzmo.setArc(180, true);
+      // window.izzmo.setArc(180, true);
       setTimeout(function() {window.izzmo.vote('down');}, 250);
     },
     init: function() {
@@ -155,16 +129,16 @@ $(document).ready(function() {
           return;
         }
         window.izzmo.room = window.location.pathname;
-        console.log('Setting up AwesomeArc...');
-        var meterObj = $('#awesome-meter');
-        if(meterObj.length > 0 && meterObj.css('display') != 'none') {
-          var meter = meterObj.position();
-          window.izzmo.arc = $('<canvas id="izzmo-arc" width="' + meterObj.width() + '" height="' + parseInt(meterObj.height()*0.39) + '" style="overflow: hidden; position: absolute; z-index: 20000; top: ' + meter.top + 'px; left: ' + meter.left + 'px;">Izzmo\'s AutoAwesome</canvas>');
-          window.izzmo.arc.prependTo(meterObj.parent());
-          window.izzmo.showArc = true;
-        }
-        else
-          window.izzmo.showArc = false;
+        // console.log('Setting up AwesomeArc...');
+        // var meterObj = $('#awesome-meter');
+        // if(meterObj.length > 0 && meterObj.css('display') != 'none') {
+          // var meter = meterObj.position();
+          // window.izzmo.arc = $('<canvas id="izzmo-arc" width="' + meterObj.width() + '" height="' + parseInt(meterObj.height()*0.39) + '" style="overflow: hidden; position: absolute; z-index: 20000; top: ' + meter.top + 'px; left: ' + meter.left + 'px;">Izzmo\'s AutoAwesome</canvas>');
+          // window.izzmo.arc.prependTo(meterObj.parent());
+          // window.izzmo.showArc = true;
+        // }
+        // else
+          // window.izzmo.showArc = false;
         
         console.log('Configuring AutoAwesomer message bar...');
         window.izzmo.botMessage = $('<div id="bot-message">Izzmo\'s AutoAwesome. <span style="font-style: italic;"></span> <a href="#" style="text-decoration: none; color: red; font-weight: bold;">Turn off</a></div>');
@@ -212,16 +186,16 @@ $(document).ready(function() {
           if(window.location.pathname != window.izzmo.room) {
             console.log('New Room found, reinitializing...');
             window.izzmo.destruct();
-            if(window.izzmo.showArc) {
-              var meterObj = $('#awesome-meter');
-              var check = setInterval(function() {
-                if(meterObj.length > 0 && meterObj.css('display') != 'none') {
-                  window.izzmo.init();
-                  clearInterval(check);
-                }
-              }, 1000);
-              setTimeout(function() {clearInterval(check);}, 10000);
-            }
+            // if(window.izzmo.showArc) {
+            //   var meterObj = $('#awesome-meter');
+            //   var check = setInterval(function() {
+            //     if(meterObj.length > 0 && meterObj.css('display') != 'none') {
+            //       window.izzmo.init();
+            //       clearInterval(check);
+            //     }
+            //   }, 1000);
+            //   setTimeout(function() {clearInterval(check);}, 10000);
+            // }
           }
         }, 3000);
         console.log('AutoAwesomer setup complete.');
@@ -232,7 +206,7 @@ $(document).ready(function() {
       clearInterval(window.izzmo.botResetAFKTimer);
       clearInterval(window.izzmo.watcher);
       window.izzmo.stop();
-      window.izzmo.arc.remove();
+      // window.izzmo.arc.remove();
       window.izzmo.botMessage.remove();
     }
   });
