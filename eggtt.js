@@ -80,7 +80,7 @@ $(document).ready(function() {
             match_turn = displayName + " it's your turn to DJ";
             match_empty = 'Just go up ' + displayName + ', open seat'
             console.debug(match_to);
-            if (d.text.match(match_turn) or d.text.match(match_empty)){
+            if (d.text.match(match_turn) || d.text.match(match_empty)){
               window.eggtt.add_dj();
             }
               
