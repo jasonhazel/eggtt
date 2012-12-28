@@ -8,7 +8,7 @@ $(document).ready(function() {
 
   
   window.izzmo = $.extend(window.izzmo, {
-    egg : {
+    eggtt : {
       init: function() {
         alert('loading');
         $('ul#settings-dropdown').append($("<li class='option' id='eggtt'>EggTT</li>"));
