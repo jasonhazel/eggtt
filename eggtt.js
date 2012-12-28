@@ -13,12 +13,12 @@ $(document).ready(function() {
           alert('Could not find turntable.fm objects. You should refresh your page and try again.');
           return;
         }
-        // window.eggtt.room = window.location.pathname;
         window.eggtt.menu.build();
         turntable.addEventListener("message", window.eggtt.listener);
       });
     },
     vote: function(c) {
+      console.debug(window.eggtt.ttObj);
       var f = $.sha1(window.eggtt.ttObj.roomId + c + window.eggtt.ttObj.currentSong._id);
       var d = $.sha1(Math.random() + "");
       var e = $.sha1(Math.random() + "");
@@ -66,11 +66,20 @@ $(document).ready(function() {
         return b.promise();
     },
     listener : function(d) {
+      // console.debug(window.eggtt.ttObj);
+      console.debug(window.turntable.user);
       // console.debug(d);
       if (d.command) {
         switch(d.command) {
           case 'newsong':
             setTimeout(window.eggtt.awesome(), 15000);
+            break;
+          case 'speak': 
+            // it's your turn to DJ, hop up on deck
+            displayName = window.turntable.user.displayName;
+            match_to = "@" + displayName + "it's your turn to DJ";
+            if (d.text.match(user))
+              window.eggtt.socket({api: 'room.add_dj', roomid: window.eggtt.ttObj.roomId});
             break;
         }
       }
