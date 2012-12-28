@@ -78,13 +78,13 @@ $(document).ready(function() {
             // it's your turn to DJ, hop up on deck
             displayName = window.turntable.user.displayName;
             match_turn = displayName + " it's your turn to DJ";
-            match_empty = 'Just go up ' + displayName + ', open seat'
+            match_empty = 'Just go up ' + displayName + ', open seat';
             console.debug(match_to);
             if (d.text.match(match_turn) || d.text.match(match_empty)){
               window.eggtt.add_dj();
             }
-              
             break;
+
         }
       }
     },
