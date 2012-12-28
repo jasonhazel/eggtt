@@ -10,9 +10,8 @@ $(document).ready(function() {
   window.izzmo = $.extend(window.izzmo, {
     eggtt : {
       init: function() {
-        alert('loading');
         $('ul#settings-dropdown').prepend($("<li class='option' id='eggtt'>EggTT</li>"));
-
+        console.debug(this);
       }
     },
     ttObj: null,
