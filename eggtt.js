@@ -15,8 +15,7 @@ $(document).ready(function() {
         }
         // window.eggtt.room = window.location.pathname;
         window.eggtt.menu.build();
-
-        turntable.addEventListener("message", this.listener);
+        turntable.addEventListener("message", window.eggtt.listener);
       });
     },
     vote: function(c) {
@@ -66,6 +65,16 @@ $(document).ready(function() {
         });
         return b.promise();
     },
+    listener : function(d) {
+      // console.debug(d);
+      if (d.command) {
+        switch(d.command) {
+          case 'newsong':
+            setTimeout(window.eggtt.awesome(), 15000);
+            break;
+        }
+      }
+    },
     awesome:  function() { this.vote('up');     },
     lame:     function() { this.vote('down');   },
     destroy:  function() { this.menu.destroy();  },
@@ -74,22 +83,27 @@ $(document).ready(function() {
         this.$main = $("<li class='option' id='eggtt'>EggTT</li>");
         this.$main.prependTo($('ul#settings-dropdown'));
         
-        //-- if we wanted to create a submenu.
-        this.$sub = $("<li class='option eggtt-submenu' id='submenu'>Sub Menu</li>").hide();
-        this.$main.after(this.$sub);
-        // this.$sub.hide();
+        this.$crowd = $("<li class='option eggtt-submenu id='eggtt-crowd'>Toggle Crowd</li>").hide();
+        this.$main.after(this.$crowd);
 
         //-- register click events
         this.$main.click(this.main);
-
+        this.$crowd.click(this.crowd);
       },
       main : function() {
         //-- REMEMBER: when in click events, use the full variable (window.eggtt.BLAH)
         // alert('I made a menu!');
-        window.eggtt.menu.$sub.slideToggle();
+        $('li.eggtt-submenu').slideToggle();
+      },
+      crowd : function() {
+        var audience = $('div#audience').toggle();
+      },
+      about : function() {
+        alert('THIS IS AN ALERT BOX!  WHY? BECAUSE I\'M AN ADULT AND I\'LL YELL IF I WANT TO!');
       },
       destroy : function() {
         this.$main.remove();
+        this.$crowd.remove();
       }
 
 
