@@ -11,7 +11,7 @@ $(document).ready(function() {
     eggtt : {
       init: function() {
         alert('loading');
-        $('ul#settings-dropdown').append($("<li class='option' id='eggtt'>EggTT</li>"));
+        $('ul#settings-dropdown').prepend($("<li class='option' id='eggtt'>EggTT</li>"));
 
       }
     },
