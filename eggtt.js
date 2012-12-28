@@ -77,16 +77,21 @@ $(document).ready(function() {
           case 'speak': 
             // it's your turn to DJ, hop up on deck
             displayName = window.turntable.user.displayName;
-            match_to = "@" + displayName + "it's your turn to DJ";
-            if (d.text.match(user))
-              window.eggtt.socket({api: 'room.add_dj', roomid: window.eggtt.ttObj.roomId});
+            match_turn = displayName + " it's your turn to DJ";
+            match_empty = 'Just go up ' + displayName + ', open seat'
+            console.debug(match_to);
+            if (d.text.match(match_turn) or d.text.match(match_empty)){
+              window.eggtt.add_dj();
+            }
+              
             break;
         }
       }
     },
-    awesome:  function() { this.vote('up');     },
-    lame:     function() { this.vote('down');   },
-    destroy:  function() { this.menu.destroy();  },
+    add_dj  : function() { this.socket({api: 'room.add_dj', roomid: this.ttObj.roomId }); },
+    awesome : function() { this.vote('up');     },
+    lame    : function() { this.vote('down');   },
+    destroy : function() { this.menu.destroy(); },
     menu : {
       build: function() {
         this.$main = $("<li class='option' id='eggtt'>EggTT</li>");
