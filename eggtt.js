@@ -3,8 +3,6 @@
  * I stripped pretty much everything out.  I want it for the core bits.
  */
 
-
-
 $(document).ready(function() {
   window.eggtt = {
     ttObj: null,
@@ -68,20 +66,17 @@ $(document).ready(function() {
         });
         return b.promise();
     },
-    awesome:  function() { this.vote('up'); },
-    lame:     function() { this.vote('down'); },
-    destruct: function() {
-      this.menu.destroy();
-    },
-    //-- menu specific code --//
+    awesome:  function() { this.vote('up');     },
+    lame:     function() { this.vote('down');   },
+    destroy:  function() { this.menu.destroy();  },
     menu : {
       build: function() {
         this.$main = $("<li class='option' id='eggtt'>EggTT</li>");
         this.$main.prependTo($('ul#settings-dropdown'));
         
         //-- if we wanted to create a submenu.
-        // this.$sub = $("<li class='option eggtt-submenu' id='submenu'>Sub Menu</li>");
-        // this.$main.after(this.$sub);
+        this.$sub = $("<li class='option eggtt-submenu' id='submenu'>Sub Menu</li>").hide();
+        this.$main.after(this.$sub);
         // this.$sub.hide();
 
         //-- register click events
@@ -90,7 +85,8 @@ $(document).ready(function() {
       },
       main : function() {
         //-- REMEMBER: when in click events, use the full variable (window.eggtt.BLAH)
-        alert('I made a menu!');
+        // alert('I made a menu!');
+        window.eggtt.menu.$sub.slideToggle();
       },
       destroy : function() {
         this.$main.remove();
