@@ -66,25 +66,11 @@ $(document).ready(function() {
         return b.promise();
     },
     listener : function(d) {
-      // console.debug(window.eggtt.ttObj);
-      console.debug(window.turntable.user);
-      // console.debug(d);
       if (d.command) {
         switch(d.command) {
           case 'newsong':
             setTimeout(window.eggtt.awesome(), 15000);
             break;
-          case 'speak': 
-            // it's your turn to DJ, hop up on deck
-            displayName = window.turntable.user.displayName;
-            match_turn = displayName + " it's your turn to DJ";
-            match_empty = 'Just go up ' + displayName + ', open seat';
-            console.debug(match_to);
-            if (d.text.match(match_turn) || d.text.match(match_empty)){
-              window.eggtt.add_dj();
-            }
-            break;
-
         }
       }
     },
@@ -93,16 +79,56 @@ $(document).ready(function() {
     lame    : function() { this.vote('down');   },
     destroy : function() { this.menu.destroy(); },
     menu : {
-      build: function() {
-        this.$main = $("<li class='option' id='eggtt'>EggTT</li>");
-        this.$main.prependTo($('ul#settings-dropdown'));
-        
-        this.$crowd = $("<li class='option eggtt-submenu id='eggtt-crowd'>Toggle Crowd</li>").hide();
-        this.$main.after(this.$crowd);
+      autodj : {
+        build : function() {
+          this.$main = $("<li class='option' id='eggtt-autodj'>Auto DJ</li>");
+          this.$main.prependTo($('ul#settings-dropdown'));
 
-        //-- register click events
-        this.$main.click(this.main);
-        this.$crowd.click(this.crowd);
+          this.$status = $("<li class='option eggtt-autodj id='eggtt-autodj-status'>OFF</li>").hide();
+          this.$main.data('status','OFF');
+          this.$main.after(this.$status);
+          
+          this.$type = $("<li class='option eggtt-autodj id='eggtt-autodj-type'>One Shot</li>").hide();
+          this.$main.data('type','one_shot');
+          this.$status.after(this.$type);
+
+
+          this.$delay = $("<li class='option eggtt-autodj id='eggtt-autodj-delay'>5 sec</li>").hide().;
+          this.$main.data('delay',5);
+          this.$type.after(this.$delay);
+
+          this.$main.click(function(){
+            $('li.eggtt-autodj').slideToggle();
+          });
+
+          this.$status.click(function(){
+            var main = window.eggtt.menu.autodj.$main;
+            // alert(main.html());
+            switch (main.data('status')) 
+            {
+              case 'OFF':
+                  main.data('status','ON');
+                break;
+              case 'ON':
+                  main.data('status','OFF');
+                break;
+            }            
+
+            window.eggtt.menu.autodj.$status.html(main.data('status'));
+          });
+        } 
+      },
+      build: function() {
+        // this.$main = $("<li class='option' id='eggtt'>EggTT</li>");
+        // this.$main.prependTo($('ul#settings-dropdown'));
+        
+        // this.$crowd = $("<li class='option eggtt-submenu id='eggtt-crowd'>Toggle Crowd</li>").hide();
+        // this.$main.after(this.$crowd);
+
+        this.autodj.build();
+        // //-- register click events
+        // this.$main.click(this.main);
+        // this.$crowd.click(this.crowd);
       },
       main : function() {
         //-- REMEMBER: when in click events, use the full variable (window.eggtt.BLAH)
