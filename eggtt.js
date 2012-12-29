@@ -84,7 +84,7 @@ $(document).ready(function() {
           this.$main = $("<li class='option' id='eggtt-autodj'>Auto DJ</li>");
           this.$main.prependTo($('ul#settings-dropdown'));
 
-          this.$status = $("<li class='option eggtt-autodj id='eggtt-autodj-status'>OFF</li>").hide();
+          this.$status = $("<li style='text-align:right;' class='option eggtt-autodj id='eggtt-autodj-status'>OFF</li>").hide();
           this.$main.data('status','OFF');
           this.$main.after(this.$status);
           
@@ -93,7 +93,7 @@ $(document).ready(function() {
           this.$status.after(this.$type);
 
 
-          this.$delay = $("<li class='option eggtt-autodj id='eggtt-autodj-delay'>5 sec</li>").hide().;
+          this.$delay = $("<li class='option eggtt-autodj id='eggtt-autodj-delay'>5 sec</li>").hide();
           this.$main.data('delay',5);
           this.$type.after(this.$delay);
 
@@ -115,6 +115,8 @@ $(document).ready(function() {
             }            
 
             window.eggtt.menu.autodj.$status.html(main.data('status'));
+
+
           });
         } 
       },
