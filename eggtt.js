@@ -14,10 +14,6 @@ $(document).ready(function() {
       this.api.vote('up');
 
       this.autoqueue.init();
-
-      // $('head').append($("<link rel='stylesheet' href='https://raw.github.com/mrhazel/eggtt/master/eggtt.css' type='text/css'>"));
-
-      turntable.addEventListener("message", this.autoqueue.listener);
     },
     menu : {
       $main: null,
@@ -42,7 +38,7 @@ $(document).ready(function() {
         console.debug(data);
       },
       init: function() {
-        this.$menu = eggtt.menu.add('autoqueue','menu-off','Auto Queue');
+        this.$menu = eggtt.menu.add('autoqueue','menu-off','Auto Queue').css('color','red');
         this.$menu.click(this.toggle);
       },
       toggle: function() {
