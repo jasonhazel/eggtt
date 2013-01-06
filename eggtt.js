@@ -33,7 +33,7 @@ $(document).ready(function() {
         if (this.$main === null) this.init();
 
         var $new_menu = $("<li>")
-                          .addClass('option' + (klass ? ' '+klass : '')) // only because the extra space would drive me mad.
+                          .addClass('option' + (klass ? ' eggtt-'+klass : '')) // only because the extra space would drive me mad.
                           .attr('id', 'eggtt-' + id)
                           .html(title);
 

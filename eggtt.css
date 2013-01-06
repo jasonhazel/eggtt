@@ -2,11 +2,11 @@
     font-weight: bold;
 }
 
-#eggtt-autoqueue .menu-on {
+.eggtt-menu-on {
     color: green;
 }
 
 
-#eggtt-autoqueue .menu-off {
+.eggtt-menu-off {
     color: red;
 }
