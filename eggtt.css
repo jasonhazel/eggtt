@@ -1,12 +1,12 @@
-li#eggtt-autoqueue {
+#eggtt-autoqueue {
     font-weight: bold;
 }
 
-li#eggtt-autoqueue .menu-on {
-    font-color: green;
+#eggtt-autoqueue .menu-on {
+    color: green;
 }
 
 
-li#eggtt-autoqueue .menu-off {
-    font-color: red;
+#eggtt-autoqueue .menu-off {
+    color: red;
 }
