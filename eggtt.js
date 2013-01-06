@@ -2,7 +2,7 @@
  * This used to be Izzmo's Auto Awesome (https://github.com/izzmo/AutoAwesomer)
  * I stripped almost everything out, and what remained was reworked.
  *
- * javascript:(function(){$('body').append('<script src=\'https://github.com/mrhazel/eggtt/blob/master/eggtt.js\'></script>');})();
+ * javascript:(function(){$('body').append('<script src=\'https://raw.github.com/mrhazel/eggtt/master/eggtt.js\'></script>');})();
  */
 
 
