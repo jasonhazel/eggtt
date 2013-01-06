@@ -1,0 +1,12 @@
+li#eggtt-autoqueue {
+    font-weight: bold;
+}
+
+li#eggtt-autoqueue .menu-on {
+    font-color: green;
+}
+
+
+li#eggtt-autoqueue .menu-on {
+    font-color: red;
+}
