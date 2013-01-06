@@ -15,12 +15,7 @@ $(document).ready(function() {
 
       this.autoqueue.init();
 
-      //inject css
-      // var head = $('head');
-      // 
-      // 
-      
-      $('head').append($("<link rel='stylesheet' href='https://raw.github.com/mrhazel/eggtt/master/eggtt.css' type='text/css'>"));
+      // $('head').append($("<link rel='stylesheet' href='https://raw.github.com/mrhazel/eggtt/master/eggtt.css' type='text/css'>"));
 
       turntable.addEventListener("message", this.autoqueue.listener);
     },
@@ -47,11 +42,20 @@ $(document).ready(function() {
         console.debug(data);
       },
       init: function() {
-        this.$autoqueue = eggtt.menu.add('autoqueue','menu-off','Auto Queue');
-        this.$autoqueue.click(this.toggle);
+        this.$menu = eggtt.menu.add('autoqueue','menu-off','Auto Queue');
+        this.$menu.click(this.toggle);
       },
       toggle: function() {
-        alert(1);
+        if(eggtt.autoqueue.active) {
+          eggtt.autoqueue.active = false;
+          eggtt.autoqueue.$menu.css('color','red');
+          turntable.removeEventListener("message", eggtt.autoqueue.listener);
+        }
+        else {
+          eggtt.autoqueue.active = true;
+          eggtt.autoqueue.$menu.css('color','green');
+          turntable.addEventListener("message", eggtt.autoqueue.listener);
+        }
       }
     },
     api : {
