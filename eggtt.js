@@ -38,7 +38,6 @@ $(document).ready(function() {
         console.log ('EggTT - Autoqueue Loaded');
       },
       listener: function(data) {
-        console.debug(data);
         switch (data.command) {
           case 'rem_dj':
             if (data.user[0].userid == turntable.user.id) {
