@@ -7,3 +7,5 @@
 - Gave variables in the remaining code from Izzmo meaningful names.
 - Added some additional API calls (addDj, speak)
 - Added AutoQueue.
+- Including minified version.
+- Added README
