@@ -51,7 +51,9 @@ $(document).ready(function() {
             var my_turn = turntable.user.displayName + " it's your turn to DJ, hop up on deck!";
             var empty_spot = "Just go up " + turntable.user.displayName + ", open seat!";
             if (data.text.match(my_turn) || data.text.match(empty_spot)) {
-              eggtt.api.addDj();
+              setTimeout(function(){
+                eggtt.api.addDj();
+              }, 10000);
             }
           break;
           case 'newsong':
