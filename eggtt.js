@@ -50,7 +50,10 @@ $(document).ready(function() {
             data.text = data.text.trim();
             var my_turn = turntable.user.displayName + " it's your turn to DJ, hop up on deck!";
             var empty_spot = "Just go up " + turntable.user.displayName + ", open seat!";
-            if (data.text.match(my_turn) || data.text.match(empty_spot)) {
+            
+            if (data.text.match(empty_spot)) eggtt.api.addDj();
+
+            if (data.text.match(my_turn)) {
               setTimeout(function(){
                 eggtt.api.addDj();
               }, 10000);
