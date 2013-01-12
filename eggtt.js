@@ -40,7 +40,7 @@ $(document).ready(function() {
           // only moderators can use it.
           if (!eggtt.isMod()) return;
 
-          if ($.inArray(this.chatty_id, turntable.buddyList.room.listenerids)) {
+          if ($.inArray(this.chatty_id, turntable.buddyList.room.listenerids) > -1) {
             turntable.addEventListener('message', eggtt.chattymissing.manual);
           }
 
