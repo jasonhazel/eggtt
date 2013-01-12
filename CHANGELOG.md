@@ -9,3 +9,8 @@
 - Added AutoQueue.
 - Including minified version.
 - Added README
+
+# 2013-01-12
+- Took out auto dj
+- Added code to keep the queue civil in case ChattyTT is unavailable
+- Added checks for moderator.  Certain things can only be used by mods.
