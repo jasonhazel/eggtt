@@ -12,6 +12,9 @@ $(document).ready(function() {
     init: function() {
       console.log('EggTT - Loaded.');
     },
+    isMod: function() {
+      return ($.inArray(window.turntable.user.id,turntable.buddyList.room.roomData.metadata.moderator_id))
+    },
     menu : {
       $main: null,
       init : function() {
@@ -29,10 +32,66 @@ $(document).ready(function() {
         return $new_menu;
       }
     },
+    chattymissing: {
+      chatty_id: '5022e5c6aaa5cd20d6000009',
+      active: false,
+      last_dj: null,
+      init: function() {
+          // only moderators can use it.
+          if (!eggtt.isMod()) return;
+
+          if ($.inArray(this.chatty_id, turntable.buddyList.room.listenerids)) {
+            turntable.addEventListener('message', eggtt.chattymissing.manual);
+          }
+
+          turntable.addEventListener('message', eggtt.chattymissing.check);
+          console.log ('EggTT - Manual Queue Loaded.');
+      },
+      check: function(data) {
+        switch (data.command) {
+          case 'registered':
+            if (data.user.indexOf(eggtt.chattymissing.chatty_id) > -1) {
+              eggtt.api.speak('/me [AUTOMATED] Chatty is back.  Time to queue up!');
+              eggtt.api.speak('addme');
+              turntable.removeEventListener(eggtt.chattymissing.manual);
+            }
+          break;
+          case 'deregistered':
+            if (data.user.indexOf(eggtt.chattymissing.chatty_id) > -1) {
+              eggtt.api.speak('/me [AUTOMATED] Chatty has gone missing.  Manual queue is on.');
+              turntable.addEventListener(eggtt.chattymissing.manual);
+            }
+          break;
+        }
+      },
+      manual: function(data) {
+        switch (data.command) {
+          case 'newsong':
+            if (eggtt.chattymissing.last_dj) {
+              eggtt.api.remDj(eggtt.chattymissing.last_dj);
+            }
+
+            eggtt.chattymissing.last_dj = data.room.metadata.current_dj;
+          break;
+          case 'speak':
+            data.text = data.text.trim();
+            if (data.text.match('addme') || data.text.match('q+')) {
+              eggtt.api.speak("/me [AUTOMATED] Queue is currently manual.  FFA to get on deck. one song limit.");
+            }
+          break;
+
+        }
+      }
+
+
+    },
     autoqueue : {
       active: false,
       bop_messages: ['dance','bounce','bop','groove','jump','boom','slam'],
       init: function() {
+        // only moderators can use it.
+        if (!eggtt.isMod()) return;
+        
         this.$menu = eggtt.menu.add('autoqueue',null,'Auto Queue').css('color','green ');
         this.$menu.click(this.toggle);
         console.log ('EggTT - Autoqueue Loaded');
@@ -44,19 +103,6 @@ $(document).ready(function() {
               setTimeout(function(){
                 eggtt.api.speak('addme');
               }, 5000);
-            }
-          break;
-          case 'speak':
-            data.text = data.text.trim();
-            var my_turn = turntable.user.displayName + " it's your turn to DJ, hop up on deck!";
-            var empty_spot = "Just go up " + turntable.user.displayName + ", open seat!";
-            
-            if (data.text.match(empty_spot)) eggtt.api.addDj();
-
-            if (data.text.match(my_turn)) {
-              setTimeout(function(){
-                eggtt.api.addDj();
-              }, 10000);
             }
           break;
           case 'newsong':
@@ -131,6 +177,9 @@ $(document).ready(function() {
       addDj : function() {
         this.send({ api: "room.add_dj", roomid: turntable.buddyList.room.roomId });
       }, // end add dj
+      remDj: function(id) {
+        this.send({api: "room.rem_dj", roomid: turntable.buddyList.room.roomId, djid: id });
+      },
       up: function() {
         this.vote('up');
       }, //end up
@@ -142,4 +191,5 @@ $(document).ready(function() {
 
   eggtt.init();
   eggtt.autoqueue.init();
+  eggtt.chattymissing.init();
 });
