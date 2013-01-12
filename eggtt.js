@@ -13,7 +13,7 @@ $(document).ready(function() {
       console.log('EggTT - Loaded.');
     },
     isMod: function() {
-      return ($.inArray(turntable.user.id,turntable.buddyList.room.roomData.metadata.moderator_id) > -1)
+      return turntable.buddyList.room.isMod();
     },
     menu : {
       $main: null,
@@ -40,7 +40,9 @@ $(document).ready(function() {
           // only moderators can use it.
           if (!eggtt.isMod()) return;
 
-          if ($.inArray(this.chatty_id, turntable.buddyList.room.listenerids) > -1) {
+          this.last_dj = turntable.buddyList.room.roomData.metadata.current_dj;
+
+          if ($.inArray(eggtt.chattymissing.chatty_id, turntable.buddyList.room.listenerids) == -1) {
             turntable.addEventListener('message', eggtt.chattymissing.manual);
           }
 
@@ -75,7 +77,7 @@ $(document).ready(function() {
           break;
           case 'speak':
             data.text = data.text.trim();
-            if (data.text.match('addme') || data.text.match('q+')) {
+            if (data.text.match('addme')) {
               eggtt.api.speak("/me [AUTOMATED] Queue is currently manual.  FFA to get on deck. one song limit.");
             }
           break;
