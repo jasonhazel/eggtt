@@ -50,14 +50,14 @@ $(document).ready(function() {
       check: function(data) {
         switch (data.command) {
           case 'registered':
-            if (data.user.indexOf(eggtt.chattymissing.chatty_id) > -1) {
+            if ($.inArray(eggtt.chattymissing.chatty_id, data.user) > -1) {
               eggtt.api.speak('/me [AUTOMATED] Chatty is back.  Time to queue up!');
               eggtt.api.speak('addme');
               turntable.removeEventListener(eggtt.chattymissing.manual);
             }
           break;
           case 'deregistered':
-            if (data.user.indexOf(eggtt.chattymissing.chatty_id) > -1) {
+            if ($.inArray(eggtt.chattymissing.chatty_id, data.user) > -1) {
               eggtt.api.speak('/me [AUTOMATED] Chatty has gone missing.  Manual queue is on.');
               turntable.addEventListener(eggtt.chattymissing.manual);
             }
