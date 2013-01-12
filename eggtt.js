@@ -13,7 +13,7 @@ $(document).ready(function() {
       console.log('EggTT - Loaded.');
     },
     isMod: function() {
-      return ($.inArray(window.turntable.user.id,turntable.buddyList.room.roomData.metadata.moderator_id))
+      return ($.inArray(turntable.user.id,turntable.buddyList.room.roomData.metadata.moderator_id) > -1)
     },
     menu : {
       $main: null,
@@ -106,7 +106,7 @@ $(document).ready(function() {
             }
           break;
           case 'newsong':
-            if (data.room.metadata.current_dj === window.turntable.user.id) {
+            if (data.room.metadata.current_dj === turntable.user.id) {
               var bop_message = Math.floor(Math.random()*eggtt.autoqueue.bop_messages.length);
               setTimeout(function(){
                 eggtt.api.speak(eggtt.autoqueue.bop_messages[bop_message]);
